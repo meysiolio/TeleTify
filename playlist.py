@@ -16,7 +16,7 @@ for i in range(1003,1007):
         edited_pattern=search_pattern.replace(" ","+")
         url = f"https://api.spotify.com/v1/search?q={edited_pattern}&type=track"
         print(url)
-        header = {'Authorization': 'Bearer BQBVgqle9Ec3DWRzKfK0bsnTIDBqCEfeXyS2q7viL5ENoZjMqATuXhNypzxDQ3EB4wbRJi4SUQqdJsXjx8JjCfP64Z_uL9dGP-Nk7KKXM0WVWWuzGhs'}
+        header = {'Authorization': 'Bearer BQAkBmGui_bxAP5CGdxPUCyIgjTt7VAifc2OAM8Sr4B_HOeZeAO_J1pJbKUASRoiSdPUnVz4qxyEzNE8IYySlj7mnxLbRHu8rXzgOHRyjr7QC7d1fpI'}
         res = requests.get(url, headers=header)
         a=res.json()
         print(a)
