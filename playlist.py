@@ -24,7 +24,6 @@ headers = {
     'Authorization': 'Bearer {token}'.format(token=access_token)
 }
 
-
 with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
 
