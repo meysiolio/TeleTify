@@ -3,9 +3,6 @@ import json
 import requests
 
 
-
-import requests
-
 CLIENT_ID = "c7534310526246c3966dbc89a94ca3e5"
 CLIENT_SECRET = "6b19f6272cbc4e39b8e4944afe6975e7"
 
@@ -28,15 +25,13 @@ headers = {
 }
 
 
-
-
 with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
 
 search_pattern = ''
 
-for i in range(0,len(msg_list_json['messages'])):
-    if msg_list_json['messages'][i]['media_type']:
+for i in range(0,len(msg_list_json["messages"])):
+    if "media_type" in msg_list_json['messages'][i]:
         if 'title' in msg_list_json['messages'][i]:
             search_pattern = search_pattern + msg_list_json['messages'][i]['title']   
         if 'performer' in msg_list_json['messages'][i]:
