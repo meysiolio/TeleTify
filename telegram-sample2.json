@@ -1,0 +1,28 @@
+{
+    "name": "🎶music🎶",
+    "type": "private_group",
+    "id": 164878439,
+    "messages": [
+       {
+        "id": 758325,
+        "type": "message",
+        "date": "2023-05-05T17:45:37",
+        "date_unixtime": "1683323137",
+        "from": "Farnoosh Canada",
+        "from_id": "user82868858",
+        "file": "(File not included. Change data exporting settings to download.)",
+        "media_type": "audio_file",
+        "performer": "AZZAMCHIK",
+        "title": "Bammballey [uzbmp3.com]",
+        "mime_type": "audio/mpeg",
+        "duration_seconds": 88,
+        "text": "این خیلي قشنگه، با احترامات فراوان!",
+        "text_entities": [
+         {
+          "type": "plain",
+          "text": "این خیلي قشنگه، با احترامات فراوان!"
+         }
+        ]
+       }
+      ]
+     }

@@ -2,13 +2,13 @@ import json
 #import sys
 import requests
 
-with open('telegram-sample.json', 'r', encoding="utf8") as json_file:
+with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
 
 search_pattern = ''
 
 for i in range(0,len(msg_list_json['messages'])):
-    if msg_list_json['messages'][i].media_type:
+    if msg_list_json['messages'][i]['media_type']:
         if 'title' in msg_list_json['messages'][i]:
             search_pattern = search_pattern + msg_list_json['messages'][i]['title']   
         if 'performer' in msg_list_json['messages'][i]:
@@ -17,10 +17,13 @@ for i in range(0,len(msg_list_json['messages'])):
             edited_pattern=search_pattern.replace(" ","+")
             url = f"https://api.spotify.com/v1/search?q={edited_pattern}&type=track"
             print(url)
-            header = {'Authorization': 'Bearer BQAuskvuytPwQUKy5VTs6w3690Nl7R4-nbmIXBiOdqR9ozybdm_g-MSh03ff37unWOvzMkDKouacnWhDIVSuFabhI1J18r8M6dTUq4sYMeB7tfLX_QE'}
+            header = {'Authorization': 'Bearer BQB-CaPTINh528vV0sylMmSxlvn9u1vM4wYGE4ehmpnYfty9SlfAIEwOUly0rxelBk1FMH0lUN01UXQKcMWdSZconZUm6b72JOp3HOCz4mopb9-gURY'}
             res = requests.get(url, headers=header)
-            a=res.json()
-            print(a)
+            a=json.loads(res.text)
+            # print(a)
+            b=res.json()
+            print(a == b)
+            # print(a)
     search_pattern = ''
 
 
