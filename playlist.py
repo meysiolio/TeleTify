@@ -2,6 +2,34 @@ import json
 #import sys
 import requests
 
+
+
+import requests
+
+CLIENT_ID = "c7534310526246c3966dbc89a94ca3e5"
+CLIENT_SECRET = "6b19f6272cbc4e39b8e4944afe6975e7"
+
+AUTH_URL = "https://accounts.spotify.com/api/token"
+auth_response = requests.post(AUTH_URL, {
+    'grant_type': 'client_credentials',
+    'client_id': CLIENT_ID,
+    'client_secret': CLIENT_SECRET,
+})
+
+#Convert response to JSON
+auth_response_data = auth_response.json()
+
+#Save the access token
+access_token = auth_response_data['access_token']
+
+#Need to pass access token into header to send properly formed GET request to API server
+headers = {
+    'Authorization': 'Bearer {token}'.format(token=access_token)
+}
+
+
+
+
 with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
 
@@ -17,8 +45,7 @@ for i in range(0,len(msg_list_json['messages'])):
             edited_pattern=search_pattern.replace(" ","+")
             url = f"https://api.spotify.com/v1/search?q={edited_pattern}&type=track"
             print(url)
-            header = {'Authorization': 'Bearer BQB-CaPTINh528vV0sylMmSxlvn9u1vM4wYGE4ehmpnYfty9SlfAIEwOUly0rxelBk1FMH0lUN01UXQKcMWdSZconZUm6b72JOp3HOCz4mopb9-gURY'}
-            res = requests.get(url, headers=header)
+            res = requests.get(url, headers=headers)
             a=json.loads(res.text)
             # print(a)
             b=res.json()
