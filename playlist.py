@@ -47,8 +47,10 @@ for i in range(0,len(msg_list_json["messages"])):
             # print(res.json())
             # a=json.loads(res.text)
 
-            with open('output.json', 'w') as out_file:
-                json.dump(res.json(), out_file, sort_keys = True, indent = 4, ensure_ascii = False)
+            print(res.json()["tracks"]["items"][0]["id"])
+
+            # with open('output.json', 'w') as out_file:
+            #     json.dump(res.json(), out_file, sort_keys = True, indent = 4, ensure_ascii = False)
     else:
         print(f"message number {i} does not contain any media")
         search_pattern = ''
