@@ -18,16 +18,15 @@ auth_response_data = auth_response.json()
 
 #Save the access token
 access_token = auth_response_data['access_token']
+# print(access_token) - each a new access token would be generated
 
 #Need to pass access token into header to send properly formed GET request to API server
 headers = {
     'Authorization': 'Bearer {token}'.format(token=access_token)
 }
 
-with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
+with open('telegram-sample.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
-
-# search_pattern = ''
 
 for i in range(0,len(msg_list_json["messages"])):
     if "media_type" in msg_list_json["messages"][i]:
