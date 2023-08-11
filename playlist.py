@@ -27,25 +27,31 @@ headers = {
 with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
 
-search_pattern = ''
+# search_pattern = ''
 
 for i in range(0,len(msg_list_json["messages"])):
-    if "media_type" in msg_list_json['messages'][i]:
-        if 'title' in msg_list_json['messages'][i]:
-            search_pattern = search_pattern + msg_list_json['messages'][i]['title']   
-        if 'performer' in msg_list_json['messages'][i]:
-            search_pattern = search_pattern + ' ' + msg_list_json['messages'][i]['performer']
+    if "media_type" in msg_list_json["messages"][i]:
+        if "title" in msg_list_json["messages"][i]:
+            search_pattern = msg_list_json["messages"][i]["title"]   
+        if "performer" in msg_list_json["messages"][i]:
+            search_pattern = search_pattern + ' ' + msg_list_json["messages"][i]["performer"]
         if search_pattern:
             edited_pattern=search_pattern.replace(" ","+")
             url = f"https://api.spotify.com/v1/search?q={edited_pattern}&type=track"
             print(url)
             res = requests.get(url, headers=headers)
-            a=json.loads(res.text)
-            # print(a)
-            b=res.json()
-            print(a == b)
-            # print(a)
-    search_pattern = ''
+            # print(res)
+            # print("\n\n\n")
+            # print(res.text)
+            # print("\n\n\n")
+            # print(res.json())
+            # a=json.loads(res.text)
+
+            with open('output.json', 'w') as out_file:
+                json.dump(res.json(), out_file, sort_keys = True, indent = 4, ensure_ascii = False)
+    else:
+        print(f"message number {i} does not contain any media")
+        search_pattern = ''
 
 
 ############## piece of codes that may be useful
