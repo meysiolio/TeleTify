@@ -63,7 +63,9 @@ for i in range(0,len(msg_list_json["messages"])):
             print(getUrl)
             res = requests.get(getUrl, headers=headers1)
 
-            song_uri = (res.json()["tracks"]["items"][0]["id"])
+            song_id = (res.json()["tracks"]["items"][0]["id"])
+            song_uri = [f"spotify:track:{song_id}"]
+            print(song_uri)
 
             sp.playlist_add_items(playlist_id, song_uri)
 
