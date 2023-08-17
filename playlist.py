@@ -10,7 +10,7 @@ global CLIENT_SECRET
 CLIENT_ID = "c7534310526246c3966dbc89a94ca3e5"
 CLIENT_SECRET = "6b19f6272cbc4e39b8e4944afe6975e7"
 playlist_id = "2QWKUjBiNjnki6OJxyeYi1"
-redirect_uri = "meysam.com/redirect"
+redirect_uri = "https://open.spotify.com"
 
 def renew_bearer_token():
 
@@ -49,8 +49,7 @@ headers2 = {
 with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
 
-auth_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
-sp = spotipy.Spotify(auth_manager=auth_manager)
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=redirect_uri, scope="playlist-modify-public"))
 
 for i in range(0,len(msg_list_json["messages"])):
     if "media_type" in msg_list_json["messages"][i]:
