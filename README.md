@@ -6,7 +6,6 @@ This piece of code digests an extracted JSON file of messages of a Telegram chat
 
 ## How to use
 To use this code, you need to have **Python3** and also these modules installed:
-
 import json  
 import requests  
 import spotipy
