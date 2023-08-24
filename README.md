@@ -11,15 +11,14 @@ import json
 import requests  
 import spotipy
 
-Then use Spotify developers tools and create an application, to specify these values and replace them in the code:
-
+Then use Spotify developers tools and create an application, to specify these values and replace them in the code:  
 
 CLIENT_ID = "SPOTIPY_CLIENT_ID"  
 CLIENT_SECRET = "SPOTIPY_CLIENT_SECRET"  
 redirect_uri = "SPOTIPY_REDIRECT_URI"  
 
 
-You also need your playlist ID and put it in the code:
+You also need your playlist ID and put it in the code:  
 
 playlist_id = "SPOTIFY_playlist_id"  
 
