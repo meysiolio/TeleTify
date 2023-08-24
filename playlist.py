@@ -7,10 +7,10 @@ global CLIENT_ID
 global CLIENT_SECRET
 global redirect_uri
 
-CLIENT_ID = "c7534310526246c3966dbc89a94ca3e5"
-CLIENT_SECRET = "6b19f6272cbc4e39b8e4944afe6975e7"
-playlist_id = "2QWKUjBiNjnki6OJxyeYi1"
-redirect_uri = "http://localhost:8888/callback"
+CLIENT_ID = "SPOTIPY_CLIENT_ID"
+CLIENT_SECRET = "SPOTIPY_CLIENT_SECRET"
+playlist_id = "SPOTIFY_playlist_id"
+redirect_uri = "SPOTIPY_REDIRECT_URI"
 
 
 def authorize_account():
@@ -22,22 +22,26 @@ def authorize_account():
         redirect_uri, 
         scope='playlist-modify-private'  # Add any required scopes here
     )
-
+    
     # Get the authorization URL
-    auth_url = sp_oauth.get_authorize_url()
-    resss = requests.get(auth_url).json()
-    print(resss.json())
-    print(sp_oauth.parse_response_code(auth_url))
+    if not sp_oauth.validate_token(sp_oauth.get_cached_token()):
+        print("----- Generating a new token -----")
+        code = sp_oauth.get_auth_response()
+        access_token = sp_oauth.get_access_token(code, as_dict=False)
 
-    print("Please navigate to this URL and authorize the app:")
-    print(auth_url)
+        #### manual process using user prompt ####
+        # auth_url = sp_oauth.get_authorize_url()
+        # print("Please navigate to this URL and authorize the app:")
+        # print(auth_url)
+        # # After authorization, the user will be redirected to the redirect URI with a code
+        # # code = input("Enter the code from the redirect URI: ")
+        # # Exchange the code for an access token
+        # token_info = sp_oauth.get_access_token(code)
+        # access_token = token_info['access_token']
 
-    # After authorization, the user will be redirected to the redirect URI with a code
-    code = input("Enter the code from the redirect URI: ")
-
-    # Exchange the code for an access token
-    token_info = sp_oauth.get_access_token(code)
-    access_token = token_info['access_token']
+    else:
+        print("----- Using cashed token -----")
+        access_token = sp_oauth.get_cached_token()['access_token']
 
     return access_token
 
@@ -55,10 +59,8 @@ headers = {
         'Content-Type': 'application/json'
     }
 
-with open('telegram-sample2.json', 'r', encoding="utf8") as json_file:
+with open('telegram-channel-messages.json', 'r', encoding="utf8") as json_file:
     msg_list_json = json.load(json_file)
-
-# sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=redirect_uri, scope="playlist-modify-public"))
 
 for i in range(0,len(msg_list_json["messages"])):
     if "media_type" in msg_list_json["messages"][i]:
@@ -75,12 +77,9 @@ for i in range(0,len(msg_list_json["messages"])):
 
             song_id = (res.json()["tracks"]["items"][0]["id"])
             song_uri = f"spotify:track:{song_id}"
-    
-            # sp.playlist_add_items(playlist_id, [song_uri], position=0)
-            # sp.playlist_items(playlist_id, fields=None, limit=100, offset=0, market=None, additional_types=('track'))
 
             postUrl = f'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
-            print(postUrl)
+            # print(postUrl)
             trackData = {
                             "uris": [
                                 song_uri
@@ -88,9 +87,11 @@ for i in range(0,len(msg_list_json["messages"])):
                             "position": 0
                         }
             addRes = requests.post(postUrl, headers=headers, data=json.dumps(trackData))
-            print(addRes.json(), end="\n\n")
+            print(addRes.json(), end="\n")
+            if addRes.json()['snapshot_id']:
+                print(f"{search_pattern} was added to the playlist\n\n")
 
     else:
         print(f"message number {i} does not contain any media\n\n")
 
-print("\n\n\nAll songs are added")
+print("\n\nAll songs are added")
